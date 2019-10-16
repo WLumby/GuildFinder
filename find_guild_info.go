@@ -15,7 +15,10 @@ func main() {
 	}
 	realm, err := unmarshalRealm(jsonData)
 
-	fmt.Println(realm)
+	for i:=0;i<len(realm);i++{
+		fmt.Println(realm[i].Name)
+		_, _ = findGuildInfo(realm[i].Url, "priest")
+	}
 }
 
 func findGuildInfo(address, class string) (string, error) {
@@ -27,9 +30,12 @@ func findGuildInfo(address, class string) (string, error) {
 
 	findString := "span[class]." + class
 	bow.Dom().Find(findString).Each(func(_ int, s *goquery.Selection) {
-		if s.Text() == "priest" {
-			// Do something
-		}
+		fmt.Println(s.Text())
+	})
+
+	findString = "span[class].innerLink"
+	bow.Dom().Find(findString).Each(func(_ int, s *goquery.Selection) {
+		fmt.Println(s.Text())
 	})
 
 	return "", nil
